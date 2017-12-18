@@ -1,9 +1,8 @@
 package ioc;
 
 import org.apache.commons.text.WordUtils;
-import utils.StopWatch;
+import proxy.BenchmarkProxyHandler;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -17,6 +16,7 @@ public class SimpleIoC {
         checkUniqueBeanNames();
     }
 
+
     private void checkUniqueBeanNames() {
         Set<String> beanNames = new HashSet<>(config.beanNames());
         if (beanNames.size() < config.beanNames().size()) {
@@ -24,9 +24,11 @@ public class SimpleIoC {
         }
     }
 
+
     public List<String> beanDefinitions() {
         return config.beanNames();
     }
+
 
     public Object getBean(String beanName) {
         if (container.containsKey(beanName)) {
@@ -45,6 +47,7 @@ public class SimpleIoC {
         return container.get(beanName);
     }
 
+
     private Object buildBeanFromDefinition(BeanDefinition beanDefinition) throws Exception  {
         Class<?> beanClass = beanDefinition.getBeanClass();
         Constructor constructor = beanClass.getDeclaredConstructors()[0];
@@ -60,17 +63,22 @@ public class SimpleIoC {
 
         bean = createBenchmarkProxy(bean);
 
+
+
         return bean;
     }
+
 
     private boolean isDefaultConstructor(Constructor constructor) {
         int constructorParametersCount = constructor.getParameterCount();
         return constructorParametersCount == 0;
     }
 
+
     private String getBeanNameFromParameterClassName(Parameter parameter) {
         return WordUtils.uncapitalize(parameter.getType().getSimpleName());
     }
+
 
     private Object instantiateBeanWithConstructor(Class clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = clazz.getDeclaredConstructors()[0];
@@ -86,9 +94,11 @@ public class SimpleIoC {
         return constructor.newInstance(arguments);
     }
 
+
     private Object instantiateBeanWithDefaultConstructor(Class clazz) throws IllegalAccessException, InstantiationException {
         return clazz.newInstance();
     }
+
 
     private void callInitMethod(Object bean) throws Exception{
         try {
@@ -101,33 +111,27 @@ public class SimpleIoC {
 
 
     private Object createBenchmarkProxy(Object bean) {
-        if (isAnnotationPresentInBean(bean, Benchmark.class)) {
-            return createProxyForBean(bean);
+        if (isAnnotatedMethodPresentInBean(bean, Benchmark.class)) {
+            return wrapBeanWithBenchmarkProxy(bean);
         }
         return bean;
     }
 
-    private boolean isAnnotationPresentInBean(Object bean, Class clazz) {
+
+    private boolean isAnnotatedMethodPresentInBean(Object bean, Class clazz) {
         for (Method method: bean.getClass().getDeclaredMethods()) {
-            if (method.getAnnotation(clazz) != null) {
+            if (method.isAnnotationPresent(clazz)) {
                 return true;
             }
         }
-        return false; // there is no Benchmark annotation
+        return false; // there is no clazz annotation present in this bean
     }
 
-    private Object createProxyForBean(Object bean) {
-        return Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
-            StopWatch stopWatch = new StopWatch();
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                stopWatch.start();
-                Object retValue = method.invoke(bean, args);
-                stopWatch.stop();
-                System.out.println("Method call was finished in " + stopWatch.getSeconds() + " seconds");
-                return retValue;
-            }
-        });
+
+    private Object wrapBeanWithBenchmarkProxy(Object bean) {
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        Class[] interfaces = bean.getClass().getInterfaces();
+        return Proxy.newProxyInstance(classLoader, interfaces, new BenchmarkProxyHandler(bean));
     }
 
 }
