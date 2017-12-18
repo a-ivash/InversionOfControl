@@ -105,7 +105,7 @@ public class SimpleIoC {
             Method method = bean.getClass().getDeclaredMethod("init");
             method.invoke(bean);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+          //  e.printStackTrace();
         }
     }
 
@@ -135,5 +135,7 @@ public class SimpleIoC {
     }
 
 }
+
+
 
 
