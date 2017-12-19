@@ -1,8 +1,8 @@
 package pizza.service;
 
 import pizza.repo.PizzaRepo;
-import pizza.repository.Pizza;
-import pizza.repository.PizzaType;
+import pizza.entity.Pizza;
+import pizza.entity.PizzaType;
 
 import java.util.List;
 import java.util.stream.Collectors;

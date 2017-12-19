@@ -1,4 +1,4 @@
-package pizza.repository;
+package pizza.entity;
 
 public enum PizzaType {
     PIZZA_ONE,

@@ -1,7 +1,7 @@
 package pizza.repo;
 
 
-import pizza.repository.Pizza;
+import pizza.entity.Pizza;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package pizza.repo;
 
 
-import pizza.repository.Pizza;
-import pizza.repository.PizzaType;
+import pizza.entity.Pizza;
+import pizza.entity.PizzaType;
 
 import java.util.ArrayList;
 import java.util.List;

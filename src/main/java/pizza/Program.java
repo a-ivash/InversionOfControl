@@ -5,8 +5,8 @@ import ioc.JavaConfig;
 import ioc.SimpleIoC;
 import pizza.repo.OrderRepoImpl;
 import pizza.repo.PizzaRepoImpl;
-import pizza.repository.Pizza;
-import pizza.repository.User;
+import pizza.entity.Pizza;
+import pizza.entity.User;
 import pizza.service.OrderService;
 import pizza.service.OrderServiceImpl;
 import pizza.service.PizzaService;
@@ -35,8 +35,6 @@ public class Program {
         Config config = new JavaConfig(new HashMap<String, Class<?>>() {{
             put("orderRepo", OrderRepoImpl.class);
             put("pizzaRepo", PizzaRepoImpl.class);
-            put("orderDao", OrderServiceImpl.class);
-            put("pizzaDao", PizzaServiceImpl.class);
             put("orderService", OrderServiceImpl.class);
             put("pizzaService", PizzaServiceImpl.class);
         }});

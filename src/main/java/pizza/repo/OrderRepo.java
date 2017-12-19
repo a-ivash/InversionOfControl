@@ -1,6 +1,6 @@
 package pizza.repo;
 
-import pizza.repository.Order;
+import pizza.entity.Order;
 
 import java.util.List;
 

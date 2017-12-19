@@ -1,9 +1,9 @@
 package pizza.repo;
 
-import pizza.repository.Order;
-import pizza.repository.Pizza;
-import pizza.repository.PizzaType;
-import pizza.repository.User;
+import pizza.entity.Order;
+import pizza.entity.Pizza;
+import pizza.entity.PizzaType;
+import pizza.entity.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

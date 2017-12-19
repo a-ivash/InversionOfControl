@@ -1,4 +1,4 @@
-package pizza.repository;
+package pizza.entity;
 
 import java.util.List;
 

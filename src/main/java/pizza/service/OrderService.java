@@ -1,8 +1,8 @@
 package pizza.service;
 
-import pizza.repository.Order;
-import pizza.repository.Pizza;
-import pizza.repository.User;
+import pizza.entity.Order;
+import pizza.entity.Pizza;
+import pizza.entity.User;
 
 import java.util.List;
 

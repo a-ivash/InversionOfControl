@@ -1,4 +1,4 @@
-package pizza.repository;
+package pizza.entity;
 
 public class Pizza {
     private int pizzaId;
