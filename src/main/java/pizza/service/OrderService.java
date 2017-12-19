@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface OrderService {
     List<Order> getAllOrders();
-    Order placeOrder(User user, Pizza ...pizzas);
+    Order placeOrder(User user, Pizza... pizzas);
 }

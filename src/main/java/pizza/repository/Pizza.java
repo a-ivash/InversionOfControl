@@ -17,6 +17,10 @@ public class Pizza {
         this.price = price;
     }
 
+    private Pizza(String title) {
+        this.title = title;
+    }
+
     public int getPizzaId() {
         return pizzaId;
     }
@@ -57,5 +61,10 @@ public class Pizza {
                 ", title='" + title + '\'' +
                 ", pizzaType=" + pizzaType +
                 '}';
+    }
+
+
+    public static Pizza notExisitingPizza() {
+        return new Pizza("<< This pizza is not present >>");
     }
 }
